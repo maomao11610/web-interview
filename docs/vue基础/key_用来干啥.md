@@ -6,14 +6,16 @@
 
 开始之前，我们先还原两个实际工作场景
 
-1.  当我们在使用`v-for`时，需要给单元加上`key`
+1. 当我们在使用 `v-for`时，需要给单元加上 `key`
 
 ```js
 <ul>
     <li v-for="item in items" :key="item.id">...</li>
 </ul>
 ```
-2. 用`+new Date()`生成的时间戳作为`key`，手动强制触发重新渲染
+
+2. 用 `+new Date()`生成的时间戳作为 `key`，手动强制触发重新渲染
+
 ```js
 <Comp :key="+new Date()" />
 ```
@@ -26,23 +28,20 @@
 
 ### 场景背后的逻辑
 
-当我们在使用`v-for`时，需要给单元加上`key`
+当我们在使用 `v-for`时，需要给单元加上 `key`
 
-- 如果不用key，Vue会采用就地复地原则：最小化element的移动，并且会尝试尽最大程度在同适当的地方对相同类型的element，做patch或者reuse。
-
+- 如果不用key，Vue会采用就地复用原则：最小化element的移动，并且会尝试尽最大程度在同适当的地方对相同类型的element，做patch或者reuse。
 - 如果使用了key，Vue会根据keys的顺序记录element，曾经拥有了key的element如果不再出现的话，会被直接remove或者destoryed
 
-用`+new Date()`生成的时间戳作为`key`，手动强制触发重新渲染
+用 `+new Date()`生成的时间戳作为 `key`，手动强制触发重新渲染
 
 - 当拥有新值的rerender作为key时，拥有了新key的Comp出现了，那么旧key Comp会被移除，新key Comp触发渲染
 
-
 ## 二、设置key与不设置key区别
-
 
 举个例子：
 
-创建一个实例，2秒后往`items`数组插入数据
+创建一个实例，2秒后往 `items`数组插入数据
 
 ```html
 <body>
@@ -65,34 +64,34 @@
 </body>
 ```
 
-在不使用`key`的情况，`vue`会进行这样的操作：
+在不使用 `key`的情况，`vue`会进行这样的操作：
 
  ![](https://static.vue-js.com/c9da6790-3f41-11eb-85f6-6fac77c0c9b3.png)
 
 分析下整体流程：
 
-- 比较A，A，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
-- 比较B，B，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
-- 比较C，F，相同类型的节点，进行`patch`，数据不同，发生`dom`操作
-- 比较D，C，相同类型的节点，进行`patch`，数据不同，发生`dom`操作
-- 比较E，D，相同类型的节点，进行`patch`，数据不同，发生`dom`操作
-- 循环结束，将E插入到`DOM`中
+- 比较A，A，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
+- 比较B，B，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
+- 比较C，F，相同类型的节点，进行 `patch`，数据不同，发生 `dom`操作
+- 比较D，C，相同类型的节点，进行 `patch`，数据不同，发生 `dom`操作
+- 比较E，D，相同类型的节点，进行 `patch`，数据不同，发生 `dom`操作
+- 循环结束，将E插入到 `DOM`中
 
 一共发生了3次更新，1次插入操作
 
-在使用`key`的情况：`vue`会进行这样的操作：
+在使用 `key`的情况：`vue`会进行这样的操作：
 
-- 比较A，A，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
-- 比较B，B，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
+- 比较A，A，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
+- 比较B，B，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
 - 比较C，F，不相同类型的节点
-  - 比较E、E，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
-- 比较D、D，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
-- 比较C、C，相同类型的节点，进行`patch`，但数据相同，不发生`dom`操作
+  - 比较E、E，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
+- 比较D、D，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
+- 比较C、C，相同类型的节点，进行 `patch`，但数据相同，不发生 `dom`操作
 - 循环结束，将F插入到C之前
 
 一共发生了0次更新，1次插入操作
 
-通过上面两个小例子，可见设置`key`能够大大减少对页面的`DOM`操作，提高了`diff`效率
+通过上面两个小例子，可见设置 `key`能够大大减少对页面的 `DOM`操作，提高了 `diff`效率
 
 ### 设置key值一定能提高diff效率吗？
 
@@ -104,12 +103,11 @@
 
 建议尽可能在使用 `v-for` 时提供 `key`，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升
 
-
 ## 三、原理分析
 
 源码位置：core/vdom/patch.js
 
-这里判断是否为同一个`key`，首先判断的是`key`值是否相等如果没有设置`key`，那么`key`为`undefined`，这时候`undefined`是恒等于`undefined`
+这里判断是否为同一个 `key`，首先判断的是 `key`值是否相等如果没有设置 `key`，那么 `key`为 `undefined`，这时候 `undefined`是恒等于 `undefined`
 
 ```js
 function sameVnode (a, b) {
@@ -130,7 +128,7 @@ function sameVnode (a, b) {
 }
 ```
 
-`updateChildren`方法中会对新旧`vnode`进行`diff`，然后将比对出的结果用来更新真实的`DOM`
+`updateChildren`方法中会对新旧 `vnode`进行 `diff`，然后将比对出的结果用来更新真实的 `DOM`
 
 ```js
 function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
@@ -172,7 +170,6 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
     ...
 }
 ```
-
 
 ## 参考文献
 
