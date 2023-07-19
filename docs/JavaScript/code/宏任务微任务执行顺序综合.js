@@ -28,3 +28,4 @@ console.log("script end"); //6
  * 7.promise2
  * 8.settimeout
  */
+// await会把任务加到异步任务的微任务队列里，会阻塞后面代码的执行

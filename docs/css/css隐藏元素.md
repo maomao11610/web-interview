@@ -30,7 +30,12 @@
     display:none;
 }
 ```
-
+- display:none
+- visiblity:hidden
+- opacity:0
+- height width:0
+- postion移走
+- clip-path:裁剪
 将元素设置为`display:none`后，元素在页面上将彻底消失
 
 元素本身占有的空间就会被其他元素占有，也就是说它会导致浏览器的重排和重绘

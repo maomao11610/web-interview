@@ -25,3 +25,19 @@ const normalTypeCheck = (origin) => {
     .call(origin)
     .replace(/^\[object (\s+)\]$/, "$1");
 };
+// a instanceof Object
+const myInstanceOf1 = (left, right) => {
+  let leftProto = Object.getPrototypeOf(left);
+  if (typeof left !== "object" || left === null) {
+    return false;
+  }
+  while (true) {
+    if (leftProto === null) {
+      return false;
+    }
+    if (leftProto === right.prototype) {
+      return true;
+    }
+    leftProto = Object.getPrototypeOf(leftProto);
+  }
+};

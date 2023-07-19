@@ -6,7 +6,7 @@ new Promise((resolve, reject) => {
   console.log("new Promise"); //同步
   resolve();
 }).then(() => {
-  console.log("promise-then"); //异步微任务
+  console.log("promise-then"); //异步微任务  当前宏任务的微任务
 });
 console.log(3); //同步
 /**
@@ -20,3 +20,14 @@ console.log(3); //同步
  * 8.发现还剩setTimeout宏任务，执行2
  * ---综上:1--->new Promise-->3--->promise-then---->2
  */
+
+// 异步任务分为微任务和宏任务，微任务在当前宏任务执行完毕后立马执行
+1.promise.then
+2.process.nextTick
+3.mutationObservers
+// 宏任务：当前宏任务极其包含的微任务是否执行完毕，执行完毕执行下一次宏任务
+1.script外层代码
+2.定时器
+3.浏览器UI渲染
+4.Node的IO等
+5.postMessage

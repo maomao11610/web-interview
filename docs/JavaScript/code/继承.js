@@ -95,7 +95,7 @@ cloneFunc(parent, children);
 children.prototype.getFriends = () => {
   return this.type;
 };
-const s1 = new children();
+const s1 = new children(); //第一次
 console.log(s1.type);
 console.log(s1.name);
 console.log(s1.getFriends());

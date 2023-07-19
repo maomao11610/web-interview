@@ -55,3 +55,17 @@ const myBind = () => {
   fBound.prototype = new fNOP();
   return fBound;
 };
+
+const myApplyCircle2 = (context, args) => {
+  context.fn = this;
+  let res = !args ? context.fn() : context.fn(...args);
+  delete context.fn;
+  return res;
+};
+const myCallCircle2 = (context) => {
+  const [context, ...args] = [...arguments]; //剩下参数，第一个参数是this要更改的实例对象，至此变为了apply
+  context.fn = this;
+  const res = context.fn(args);
+  delete context.fn;
+  return res;
+};
