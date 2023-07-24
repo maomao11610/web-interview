@@ -7,7 +7,7 @@ let eventBus = {
     }
     this.eventList[key].push(func);
   },
-  notify: (key, ...arg) => {
+  emit: (key, ...arg) => {
     this.eventList[key].forEach((fn) => {
       // 执行
       fn.call(this, ...arg);
