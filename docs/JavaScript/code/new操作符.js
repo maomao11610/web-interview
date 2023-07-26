@@ -10,7 +10,7 @@ const myNew = (func, ...args) => {
  * 1.新建一个对象
  * 2.构造函数的原型对象挂载到实例对象的原型链上
  * 3.更改构造函数的this到实例对象
- * 4.返回构造出来的实例对象
+ * 4.根据条件返回构造出来的实例对象
  */
 const myNewCircle1 = (func, ...args) => {
   const newObj = {};
