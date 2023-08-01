@@ -1,5 +1,5 @@
 // 将函数设置为传入对象的属性；
-// 执行该函数；
+//立即执行该函数；
 // 删除该属性； 上面的例子就可以改写为：
 const myCall = (context) => {
   // 初始化，获取传入的this对象和后续所有参数
@@ -31,6 +31,7 @@ const myApply = function (context, args) {
 };
 
 // bind  创建一个新的函数，在 bind 被调用时，这个新函数的 this 被指定为 bind()的第一个参数，而其余参数将作为新函数的参数，供调用时使用
+//返回一个可永久更改this指向的函数
 const myBind = () => {
   // 将当前函数的this存放起来
   var _self = this;

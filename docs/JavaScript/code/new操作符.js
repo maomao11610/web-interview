@@ -12,9 +12,9 @@ const myNew = (func, ...args) => {
  * 3.更改构造函数的this到实例对象
  * 4.根据条件返回构造出来的实例对象
  */
-const myNewCircle1 = (func, ...args) => {
-  const newObj = {};
-  newObj._proto_ = func.prototype;
-  let res = func.apply(newObj, args);
+const myNew1 = (fn, ...args) => {
+  let newObj = {};
+  newObj._proto_ = fn.prototype;
+  let res = fn.apply(newObj, args);
   return res instanceof Object ? res : newObj;
 };
